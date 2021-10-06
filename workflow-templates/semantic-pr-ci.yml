@@ -1,0 +1,17 @@
+name: Pull Request Sematic Check
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - edited
+      - synchronize
+
+jobs:
+  pr_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: vc-vantage/semantic-pr-composite-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          jira-ticket-prefix: ${{ secrets.TICKET_PREFIX }}

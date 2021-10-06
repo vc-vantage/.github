@@ -1,0 +1,5 @@
+{
+    "name": "Semantic PR Check",
+    "description": "Ensure that your PR title matches the Conventional Commits spec",
+    "iconName": "pull-request"
+}
