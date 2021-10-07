@@ -1,0 +1,5 @@
+{
+    "name": "Docker Build and Push to GitHub repository",
+    "description": "Build Docker image and Push to GitHub repository on new release",
+    "iconName": "docker"
+}
