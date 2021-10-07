@@ -1,0 +1,5 @@
+{
+    "name": "Semantic Release",
+    "description": "Release new version based on commit logs",
+    "iconName": "rocket"
+}
