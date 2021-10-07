@@ -6,7 +6,7 @@ on:
       - $default-branch
 
 jobs:
-  pr_check:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: vc-vantage/semantic-release-composite-action@v1
