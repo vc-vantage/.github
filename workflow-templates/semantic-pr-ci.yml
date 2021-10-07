@@ -13,5 +13,5 @@ jobs:
     steps:
       - uses: vc-vantage/semantic-pr-composite-action@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GH_TOKEN }}
           jira-ticket-prefix: ${{ secrets.TICKET_PREFIX }}
