@@ -1,5 +1,5 @@
-name: Docker build and push to GitHub repository
-
+# This workflow build docker image and push to GitHub repository.
+#
 on:
   release:
     types: 
@@ -11,7 +11,7 @@ env:
 
 jobs:
   docker_push:
-    name: Docker build and push
+    name: Docker build and push to GH repo
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository

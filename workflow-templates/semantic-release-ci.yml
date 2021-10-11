@@ -1,5 +1,10 @@
-name: Semantic Release
-
+# This workflow publish new release based on Conventional Commits commit history.
+#
+# Use this workflow work best with "Semantic PR Check" workflow.
+#
+# For more information about Conventional Commits specitfaction, refer to https://www.conventionalcommits.org/
+# For more information about Semantic Release, refer to https://semantic-release.gitbook.io/
+#
 on:
   push:
     branches:
@@ -7,6 +12,7 @@ on:
 
 jobs:
   release:
+    name: Semantic Release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
