@@ -1,0 +1,8 @@
+{
+    "name": "Docker Build and Push to ECR repository",
+    "description": "Build Docker image and Push to ECR repository on new release",
+    "iconName": "docker",
+    "filePatterns": [
+        "^Dockerfile"
+    ]
+}

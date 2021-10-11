@@ -1,0 +1,25 @@
+name: Docker build and push to ECR repository
+
+on:
+  release:
+    types: 
+      - published
+
+env:
+  REGISTRY: secrets.ECR_REGISTRY
+  IMAGE_NAME: ${GITHUB_REPOSITORY/vc-vantage\/vantage-/}
+
+jobs:
+  docker_push:
+    name: Docker build and push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - uses: vc-vantage/docker-push-ecr-composite-action@v1
+        with:
+          ecr-access-key: ${{ github.actor }}
+          ecr-secret-key: ${{ secrets.GITHUB_TOKEN }}
+          docker-registry: ${{ env.REGISTRY }}
+          docker-image: ${{ env.IMAGE_NAME }}
