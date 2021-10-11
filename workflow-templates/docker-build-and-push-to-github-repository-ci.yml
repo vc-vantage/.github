@@ -1,5 +1,7 @@
 # This workflow build docker image and push to GitHub repository.
 #
+name: Build and push docker
+
 on:
   release:
     types: 

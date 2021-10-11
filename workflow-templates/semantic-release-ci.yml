@@ -5,6 +5,8 @@
 # For more information about Conventional Commits specitfaction, refer to https://www.conventionalcommits.org/
 # For more information about Semantic Release, refer to https://semantic-release.gitbook.io/
 #
+name: Release
+
 on:
   push:
     branches:
