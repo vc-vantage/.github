@@ -7,8 +7,11 @@ on:
       - published
 
 env:
-  REGISTRY:   ${{ secrets.ECR_REGISTRY }}                   # AWS ECR registry (format: `aws_account_id.dkr.ecr.region.amazonaws.com`)
-  IMAGE_NAME: ${GITHUB_REPOSITORY/vc-vantage\/vantage-/}    # Image name
+  ECR_REGISTRY:               ${{ secrets.ECR_REGISTRY }}                   # AWS ECR registry (format: `aws_account_id.dkr.ecr.region.amazonaws.com`)
+  ECR_AWS_ACCESS_KEY_ID:      ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}          # AWS Access Key
+  ECR_AWS_SECRET_ACCESS_KEY:  ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}      # AWS Access Secret Key
+  ECR_PREFIX:                 ${{ secrets.ECR_REGISTRY }}                   # optional: prefix for ECR repositories (must ending with "/")
+  IMAGE_NAME:                 ${GITHUB_REPOSITORY/vc-vantage\/vantage-/}    # Image name
 
 jobs:
   docker_push:
@@ -20,7 +23,7 @@ jobs:
 
       - uses: vc-vantage/docker-push-ecr-composite-action@v1
         with:
-          ecr-access-key: ${{ github.actor }}
-          ecr-secret-key: ${{ secrets.GITHUB_TOKEN }}
-          docker-registry: ${{ env.REGISTRY }}
-          docker-image: ${{ env.IMAGE_NAME }}
+          ecr-access-key:  ${{ env.ECR_AWS_ACCESS_KEY_ID }}
+          ecr-secret-key:  ${{ env.ECR_AWS_SECRET_ACCESS_KEY }}
+          docker-registry: ${{ env.ECR_REGISTRY }}${{ env.ECR_PREFIX }}
+          docker-image:    ${{ env.IMAGE_NAME }}
