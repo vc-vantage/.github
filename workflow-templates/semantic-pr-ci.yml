@@ -15,7 +15,6 @@ on:
       - synchronize
 
 env:
-  GH_TOKEN:      ${{ secrets.GH_TOKEN }}             # setup "Personal Access Token" (required to handle release events)
   TICKET_PREFIX: ${{ secrets.TICKET_PREFIX }}        # setup JIRA prefix for tickets - format "JIRA-"
 
 jobs:
@@ -25,5 +24,5 @@ jobs:
     steps:
       - uses: vc-vantage/semantic-pr-composite-action@v1
         with:
-          github-token: ${{ env.GH_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           jira-ticket-prefix: ${{ env.TICKET_PREFIX }}

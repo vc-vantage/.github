@@ -1,6 +1,10 @@
 # This workflow publish new release based on Conventional Commits commit history.
 #
 # Use this workflow work best with "Semantic PR Check" workflow.
+# 
+# Workflow use special secret `SEMANTIC_RELEASE_GH_TOKEN`. This is temporary token with permissions:
+#  - Read access to metadata
+#  - Read and write access to actions, code, discussions, and issues
 #
 # For more information about Conventional Commits specitfaction, refer to https://www.conventionalcommits.org/
 # For more information about Semantic Release, refer to https://semantic-release.gitbook.io/
@@ -12,6 +16,9 @@ on:
     branches:
       - $default-branch
 
+env:
+  GH_TOKEN: ${{ secrets.SEMANTIC_RELEASE_GH_TOKEN }}     # setup special Access Token that allow more than default `GITHUB_TOKEN`
+
 jobs:
   release:
     name: Semantic Release
@@ -20,5 +27,5 @@ jobs:
       - uses: actions/checkout@v2
       - uses: vc-vantage/semantic-release-composite-action@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ env.GH_TOKEN }}
           npm-token: ${{ secrets.NPM_TOKEN }}
