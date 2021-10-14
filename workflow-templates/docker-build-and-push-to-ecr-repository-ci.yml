@@ -10,7 +10,7 @@ env:
   ECR_REGISTRY:               ${{ secrets.ECR_REGISTRY }}                   # AWS ECR registry (format: `aws_account_id.dkr.ecr.region.amazonaws.com`)
   ECR_AWS_ACCESS_KEY_ID:      ${{ secrets.ECR_AWS_ACCESS_KEY_ID }}          # AWS Access Key
   ECR_AWS_SECRET_ACCESS_KEY:  ${{ secrets.ECR_AWS_SECRET_ACCESS_KEY }}      # AWS Access Secret Key
-  ECR_PREFIX:                 ${{ secrets.ECR_REGISTRY }}                   # optional: prefix for ECR repositories (must ending with "/")
+  ECR_PREFIX:                 ${{ secrets.ECR_PREFIX }}                     # optional: prefix for ECR repositories (must ending with "/")
   IMAGE_NAME:                 ${GITHUB_REPOSITORY/vc-vantage\/vantage-/}    # Image name
 
 jobs:
