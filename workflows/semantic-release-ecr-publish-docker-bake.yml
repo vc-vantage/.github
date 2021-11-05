@@ -1,0 +1,71 @@
+name: Reusable Semantic Release with Docker publish using Buildx Bake
+
+on:
+  workflow_call:
+    inputs:
+      registry:
+        description: 'Docker Registry URL'
+        required: true
+        type: string
+      environment:
+        required: false
+        type: string
+    secrets:
+      registry_username:
+        description: 'Docker Registry Username'
+        required: true
+      registry_password:
+        description: 'Docker Registry Password'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ inputs.registry }}
+          username: ${{ secrets.registry_username }}
+          password: ${{ secrets.registry_password }}
+      -
+        name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+      - 
+        name: Release
+        uses: cycjimmy/semantic-release-action@v2
+        id: semantic
+        with:
+          extra_plugins: |
+            viacomcbs-labs/semantic-release-npm-github-config#v1.4.1
+          extends: |
+            @viacomcbs-labs/semantic-release-npm-github-config
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      -
+        name: Docker meta
+        if: steps.semantic.outputs.new_release_published == 'true'
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ${{ env.REGISTRY }}/sandbox
+          tags: |
+            type=semver,pattern={{version}},value=${{steps.semantic.outputs.new_release_version}}
+            type=semver,pattern={{major}}.{{minor}},value=${{steps.semantic.outputs.new_release_version}}
+            type=sha
+            type=raw,value=latest
+      -
+        name: Build and push
+        if: steps.semantic.outputs.new_release_published == 'true'
+        uses: docker/bake-action@v1
+        with:
+          files: |
+            ./docker-bake.hcl
+            ${{ steps.meta.outputs.bake-file }}
+          push: true
